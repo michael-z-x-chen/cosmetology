@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.cloud</groupId>
+    <artifactId>cloud-service</artifactId>
+    <version>2.0</version>
+  </parent>
+  <groupId>com.cloud</groupId>
+  <artifactId>es-center</artifactId>
+  <version>2.0</version>
+  <name>es-center</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>5.4.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.elasticsearch</artifactId>
+                    <groupId>elasticsearch</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- IK分词器 -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-analysis-ik</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.7</version>
+        </dependency>
+        
+        
+        
+  </dependencies>
+</project>

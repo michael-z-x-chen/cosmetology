@@ -1,0 +1,65 @@
+spring:
+  redis:
+    host: redis-dev.hd
+    port: 6379
+    password: dev@hengda 
+    timeout: 10s
+#    集群环境打开下面注释，单机不需要打开--------------
+    cluster:
+      nodes: redis-dev.hd:6379,redis-dev.hd:6380,redis-dev.hd:7000,redis-dev.hd:7001,redis-dev.hd:7002,redis-dev.hd:7003,redis-dev.hd:7004,redis-dev.hd:7005,redis-dev.hd:7006 
+      #默认值是5 一般当此值设置过大时，容易报：Too many Cluster redirections
+      maxRedirects: 3
+#--------------------- 
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql-dev.hd:3307/cloud_oauth?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: dev_user
+    password: dev_user123
+    
+    
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+  rabbitmq:
+    host: rabbitmq-dev.hd
+    port: 5672
+    username: test
+    password: 1234
+    virtual-host: /sctest
+  mvc:
+    servlet:
+      load-on-startup: 1
+  zipkin:
+    base-url: http://localhost:9411
+    enabled: true
+    sender:
+      type: web
+access_token:
+  store-jwt: false
+  jwt-signing-key: xiao@wei@jia@gou=$==+_+%0%:)(:)
+  add-userinfo: false
+logging:
+  level:
+    root: info
+    com.cloud: debug
+  file: logs/${spring.application.name}.log
+ribbon:
+  eager-load:
+    enabled: true
+    clients: user-center
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

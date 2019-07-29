@@ -1,0 +1,29 @@
+logging:
+  level:
+    root: info
+    com.cloud: debug
+  file: logs/${spring.application.name}.log
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql-dev.hd:3307/cloud_file?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: dev_user
+    password: dev_user123
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    thymeleaf:
+        mode: LEGACYHTML5
+        cache: false        
+    
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+ 
+mybatis:
+  type-aliases-package: com.cloud.generate.model
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    mapUnderscoreToCamelCase: true
+

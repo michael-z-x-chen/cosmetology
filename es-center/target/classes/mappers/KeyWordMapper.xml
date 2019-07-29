@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evergrande.esserver.mapper.KeyWordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="com.evergrande.esserver.model.KeyWordModel">
+        <result property="keyId" column="key_id"/>
+        <result property="parentKeyId" column="parent_key_id"/>
+        <result property="collectType" column="collect_type"/>
+        <result property="keyState" column="key_state"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="dbCreatedTime" column="db_created_time"/>
+        <result property="dbUpdatedTime" column="db_updated_time"/>
+    </resultMap>
+
+
+    <sql id="baseColumns">
+
+        key_id ,
+        parent_key_id ,
+        collect_type ,
+        key_state ,
+        key_word ,
+        is_delete ,
+        created_by ,
+        updated_by ,
+        db_created_time ,
+        db_updated_time 
+
+</sql>
+
+
+    <sql id="queryConditions">
+        WHERE 1=1
+
+        <if test="keyWordModel.keyId > 0 ">
+            AND key_id = #{keyWordModel.keyId} ,
+        </if>
+
+        <if test="keyWordModel.parentKeyId > 0 ">
+            AND parent_key_id = #{keyWordModel.parentKeyId} ,
+        </if>
+
+        <if test="keyWordModel.collectType > 0 ">
+            AND collect_type = #{keyWordModel.collectType} ,
+        </if>
+
+        <if test="keyWordModel.keyState > 0 ">
+            AND key_state = #{keyWordModel.keyState} ,
+        </if>
+
+        <if test="keyWordModel.keyWord != null">
+            AND key_word = #{keyWordModel.keyWord} ,
+        </if>
+
+        <if test="keyWordModel.isDelete > 0 ">
+            AND is_delete = #{keyWordModel.isDelete} ,
+        </if>
+
+        <if test="keyWordModel.createdBy > 0 ">
+            AND created_by = #{keyWordModel.createdBy} ,
+        </if>
+
+        <if test="keyWordModel.updatedBy > 0 ">
+            AND updated_by = #{keyWordModel.updatedBy} ,
+        </if>
+
+        <if test="keyWordModel.dbCreatedTime != null">
+            AND db_created_time = #{keyWordModel.dbCreatedTime} ,
+        </if>
+
+        <if test="keyWordModel.dbUpdatedTime != null">
+            AND db_updated_time = #{keyWordModel.dbUpdatedTime}
+        </if>
+
+
+    </sql>
+
+
+    <sql id="limit">
+        <if test="page != null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </sql>
+
+
+    <insert id="save" parameterType="com.evergrande.esserver.model.KeyWordModel" useGeneratedKeys="true"
+            keyProperty="KeyId" keyColumn="key_id">
+        insert into sc_es_key_word
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="keyWordModel.parentKeyId >0">
+                parent_key_id ,
+            </if>
+
+            <if test="keyWordModel.collectType != null">
+                collect_type ,
+            </if>
+
+            <if test="keyWordModel.keyState != null">
+                key_state ,
+            </if>
+
+            <if test="keyWordModel.keyWord != null">
+                key_word ,
+            </if>
+
+            <if test="keyWordModel.isDelete != null">
+                is_delete ,
+            </if>
+
+            <if test="keyWordModel.createdBy >0">
+                created_by ,
+            </if>
+
+            <if test="keyWordModel.updatedBy >0">
+                updated_by ,
+            </if>
+
+            <if test="keyWordModel.dbCreatedTime != null">
+                db_created_time ,
+            </if>
+
+            <if test="keyWordModel.dbUpdatedTime != null">
+                db_updated_time
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="keyWordModel.parentKeyId >0">
+                #{keyWordModel.parentKeyId} ,
+            </if>
+
+            <if test="keyWordModel.collectType != null">
+                #{keyWordModel.collectType} ,
+            </if>
+
+            <if test="keyWordModel.keyState != null">
+                #{keyWordModel.keyState} ,
+            </if>
+
+            <if test="keyWordModel.keyWord != null">
+                #{keyWordModel.keyWord} ,
+            </if>
+
+            <if test="keyWordModel.isDelete != null">
+                #{keyWordModel.isDelete} ,
+            </if>
+
+            <if test="keyWordModel.createdBy >0">
+                #{keyWordModel.createdBy} ,
+            </if>
+
+            <if test="keyWordModel.updatedBy >0">
+                #{keyWordModel.updatedBy} ,
+            </if>
+
+            <if test="keyWordModel.dbCreatedTime != null">
+                #{keyWordModel.dbCreatedTime} ,
+            </if>
+
+            <if test="keyWordModel.dbUpdatedTime != null">
+                #{keyWordModel.dbUpdatedTime}
+            </if>
+
+
+        </trim>
+    </insert>
+
+
+    <insert id="saveList" parameterType="java.util.List">
+        insert into sc_es_key_word
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            parent_key_id ,
+            collect_type ,
+            key_state ,
+            key_word ,
+            is_delete ,
+            created_by ,
+            updated_by
+        </trim>
+        VALUES
+        <foreach collection="listKeyWordModel" item="keyWordModel" index="index"
+                 separator=",">
+            (
+            #{keyWordModel.parentKeyId} ,
+            #{keyWordModel.collectType} ,
+            #{keyWordModel.keyState} ,
+            #{keyWordModel.keyWord} ,
+            #{keyWordModel.isDelete} ,
+            #{keyWordModel.createdBy} ,
+            #{keyWordModel.updatedBy}
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryDetail" parameterType="com.evergrande.esserver.model.KeyWordModel"
+            resultMap="baseResultMap">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_key_word
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <select id="queryList" resultMap="baseResultMap"
+            parameterType="com.evergrande.esserver.model.KeyWordModel">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_key_word
+        <include refid="queryConditions"/>
+        order by key_id desc
+    </select>
+
+    <select id="queryListByPage" resultMap="baseResultMap"
+            parameterType="com.evergrande.esserver.model.KeyWordModel">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_key_word
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <select id="queryCount" parameterType="com.evergrande.esserver.model.KeyWordModel"
+            resultType="java.lang.Long">
+        SELECT COUNT(1) FROM sc_es_key_word
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <update id="update" parameterType="com.evergrande.esserver.model.KeyWordModel">
+        update sc_es_key_word
+        <set>
+            <if test="keyWordModel.keyId > 0">
+                key_id = #{keyWordModel.keyId} ,
+            </if>
+
+            <if test="keyWordModel.parentKeyId > 0">
+                parent_key_id = #{keyWordModel.parentKeyId} ,
+            </if>
+
+            <if test="keyWordModel.collectType >0">
+                collect_type = #{keyWordModel.collectType} ,
+            </if>
+
+            <if test="keyWordModel.keyState >0">
+                key_state = #{keyWordModel.keyState} ,
+            </if>
+
+            <if test="keyWordModel.keyWord != null">
+                key_word = #{keyWordModel.keyWord} ,
+            </if>
+
+            <if test="keyWordModel.isDelete >0">
+                is_delete = #{keyWordModel.isDelete} ,
+            </if>
+
+            <if test="keyWordModel.createdBy > 0">
+                created_by = #{keyWordModel.createdBy} ,
+            </if>
+
+            <if test="keyWordModel.updatedBy > 0">
+                updated_by = #{keyWordModel.updatedBy} ,
+            </if>
+
+            <if test="keyWordModel.dbCreatedTime != null">
+                db_created_time = #{keyWordModel.dbCreatedTime} ,
+            </if>
+
+            <if test="keyWordModel.dbUpdatedTime != null">
+                db_updated_time = #{keyWordModel.dbUpdatedTime}
+            </if>
+        </set>
+        where key_id = #{keyWordModel.KeyId}
+    </update>
+
+
+    <delete id="delete" parameterType="com.evergrande.esserver.model.KeyWordModel">
+        delete from sc_es_key_word
+        <include refid="queryConditions"/>
+    </delete>
+
+
+    <update id="updateState" parameterType="com.evergrande.esserver.model.KeyWordModel">
+        update sc_es_key_word set key_state = 1 where key_state = #{keyWordModel.keyState} 
+    </update>
+
+
+</mapper>

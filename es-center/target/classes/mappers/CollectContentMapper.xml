@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evergrande.esserver.mapper.CollectContentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="com.evergrande.esserver.model.CollectContentModel">
+        <result property="contentId" column="content_id"/>
+        <result property="spaceName" column="space_name"/>
+        <result property="contentState" column="content_state"/>
+        <result property="primaryKey" column="primary_key"/>
+        <result property="contentJson" column="content_json"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="dbCreatedTime" column="db_created_time"/>
+        <result property="dbUpdatedTime" column="db_updated_time"/>
+        <result property="timeStamp" column="time_stamp"/>
+        <result property="businessSysCode" column="business_sys_code"/>
+        <result property="indexKey" column="index_key"/>
+    </resultMap>
+
+
+    <sql id="baseColumns">
+
+        content_id ,
+        space_name ,
+        content_state ,
+        primary_key ,
+        content_json ,
+        is_delete ,
+        created_by ,
+        updated_by ,
+        db_created_time ,
+        db_updated_time ,
+        time_stamp,
+        business_sys_code,
+        index_key
+
+    </sql>
+
+
+    <sql id="queryConditions">
+        WHERE 1=1
+
+        <if test="collectContentModel.contentId > 0 ">
+            AND content_id = #{collectContentModel.contentId}
+        </if>
+
+        <if test="collectContentModel.spaceName != null">
+            AND space_name = #{collectContentModel.spaceName}
+        </if>
+
+        <if test="collectContentModel.contentState > 0 ">
+            AND content_state = #{collectContentModel.contentState}
+        </if>
+
+        <if test="collectContentModel.primaryKey != null">
+            AND primary_key = #{collectContentModel.primaryKey}
+        </if>
+
+        <if test="collectContentModel.contentJson != null">
+            AND content_json = #{collectContentModel.contentJson}
+        </if>
+
+        <if test="collectContentModel.isDelete > 0 ">
+            AND is_delete = #{collectContentModel.isDelete}
+        </if>
+
+        <if test="collectContentModel.createdBy > 0 ">
+            AND created_by = #{collectContentModel.createdBy}
+        </if>
+
+        <if test="collectContentModel.updatedBy > 0 ">
+            AND updated_by = #{collectContentModel.updatedBy}
+        </if>
+
+        <if test="collectContentModel.dbCreatedTime != null">
+            AND db_created_time = #{collectContentModel.dbCreatedTime}
+        </if>
+
+        <if test="collectContentModel.dbUpdatedTime != null">
+            AND db_updated_time = #{collectContentModel.dbUpdatedTime}
+        </if>
+
+        <if test="collectContentModel.timeStamp > 0">
+            AND time_stamp = #{collectContentModel.timeStamp}
+        </if>
+
+        <if test="collectContentModel.businessSysCode != null">
+            AND business_sys_code = #{collectContentModel.businessSysCode}
+        </if>
+
+        <if test="collectContentModel.indexKey != null">
+            AND index_key = #{collectContentModel.indexKey}
+        </if>
+    </sql>
+
+
+    <sql id="limit">
+        <if test="page != null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </sql>
+
+
+    <insert id="save" parameterType="com.evergrande.esserver.model.CollectContentModel" useGeneratedKeys="true"
+            keyProperty="contentId" keyColumn="content_id">
+        insert into sc_es_collect_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="collectContentModel.spaceName != null">
+                space_name ,
+            </if>
+
+            <if test="collectContentModel.contentState != null">
+                content_state ,
+            </if>
+
+            <if test="collectContentModel.primaryKey != null">
+                primary_key ,
+            </if>
+
+            <if test="collectContentModel.contentJson != null">
+                content_json ,
+            </if>
+
+            <if test="collectContentModel.isDelete != null">
+                is_delete ,
+            </if>
+
+            <if test="collectContentModel.createdBy >0">
+                created_by ,
+            </if>
+
+            <if test="collectContentModel.updatedBy >0">
+                updated_by ,
+            </if>
+
+            <if test="collectContentModel.dbCreatedTime != null">
+                db_created_time ,
+            </if>
+
+            <if test="collectContentModel.dbUpdatedTime != null">
+                db_updated_time ,
+            </if>
+
+            <if test="collectContentModel.timeStamp > 0">
+                time_stamp ,
+            </if>
+
+            <if test="collectContentModel.businessSysCode != null">
+                business_sys_code,
+            </if>
+
+            <if test="collectContentModel.indexKey != null">
+                index_key,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="collectContentModel.spaceName != null">
+                #{collectContentModel.spaceName} ,
+            </if>
+
+            <if test="collectContentModel.contentState != null">
+                #{collectContentModel.contentState} ,
+            </if>
+
+            <if test="collectContentModel.primaryKey != null">
+                #{collectContentModel.primaryKey} ,
+            </if>
+
+            <if test="collectContentModel.contentJson != null">
+                #{collectContentModel.contentJson} ,
+            </if>
+
+            <if test="collectContentModel.isDelete != null">
+                #{collectContentModel.isDelete} ,
+            </if>
+
+            <if test="collectContentModel.createdBy >0">
+                #{collectContentModel.createdBy} ,
+            </if>
+
+            <if test="collectContentModel.updatedBy >0">
+                #{collectContentModel.updatedBy} ,
+            </if>
+
+            <if test="collectContentModel.dbCreatedTime != null">
+                #{collectContentModel.dbCreatedTime} ,
+            </if>
+
+            <if test="collectContentModel.dbUpdatedTime != null">
+                #{collectContentModel.dbUpdatedTime} ,
+            </if>
+
+            <if test="collectContentModel.timeStamp > 0">
+                #{collectContentModel.timeStamp} ,
+            </if>
+
+            <if test="collectContentModel.businessSysCode != null">
+                #{collectContentModel.businessSysCode},
+            </if>
+
+            <if test="collectContentModel.indexKey != null">
+                #{collectContentModel.indexKey},
+            </if>
+
+        </trim>
+    </insert>
+
+    <select id="queryDetail" parameterType="com.evergrande.esserver.model.CollectContentModel"
+            resultMap="baseResultMap">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_collect_content
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <select id="queryList" resultMap="baseResultMap"
+            parameterType="com.evergrande.esserver.model.CollectContentModel">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_collect_content
+        <include refid="queryConditions"/>
+        order by content_id desc
+    </select>
+
+    <select id="queryListByPage" resultMap="baseResultMap"
+            parameterType="com.evergrande.esserver.model.CollectContentModel">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_collect_content
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <select id="queryCount" parameterType="com.evergrande.esserver.model.CollectContentModel"
+            resultType="java.lang.Long">
+        SELECT COUNT(1) FROM sc_es_collect_content
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <update id="update" parameterType="com.evergrande.esserver.model.CollectContentModel">
+        update sc_es_collect_content
+        <set>
+            <if test="collectContentModel.spaceName != null">
+                space_name = #{collectContentModel.spaceName} ,
+            </if>
+
+            <if test="collectContentModel.contentState >0">
+                content_state = #{collectContentModel.contentState} ,
+            </if>
+
+            <if test="collectContentModel.primaryKey != null">
+                primary_key = #{collectContentModel.primaryKey} ,
+            </if>
+
+            <if test="collectContentModel.contentJson != null">
+                content_json = #{collectContentModel.contentJson} ,
+            </if>
+
+            <if test="collectContentModel.isDelete >0">
+                is_delete = #{collectContentModel.isDelete} ,
+            </if>
+
+            <if test="collectContentModel.updatedBy > 0">
+                updated_by = #{collectContentModel.updatedBy} ,
+            </if>
+
+            <if test="collectContentModel.timeStamp > 0">
+                time_stamp = #{collectContentModel.timeStamp},
+            </if>
+
+            <if test="collectContentModel.businessSysCode != null">
+                business_sys_code = #{collectContentModel.businessSysCode},
+            </if>
+
+            <if test="collectContentModel.indexKey != null">
+                index_key = #{collectContentModel.indexKey},
+            </if>
+
+        </set>
+        where content_id = #{contentId}
+    </update>
+
+
+    <delete id="delete" parameterType="com.evergrande.esserver.model.CollectContentModel">
+        delete from sc_es_collect_content
+        <include refid="queryConditions"/>
+    </delete>
+
+    <select id="querySwitchIndeKeyData" resultType="java.lang.Long">
+        SELECT
+        content_id
+        FROM
+        sc_es_collect_content
+        WHERE
+        index_key != #{indexKey}
+        AND is_delete = 0
+        LIMIT 0, 50
+    </select>
+
+    <select id="queryMqErrorData" resultType="java.lang.Long">
+        SELECT
+        content_id
+        FROM
+        sc_es_collect_content
+        WHERE
+        index_key = #{indexKey}
+        AND is_delete = 0
+        AND content_state = 3
+        LIMIT 0, 50
+    </select>
+
+    <select id="switchIndexKeyCount" resultType="java.lang.Long">
+        SELECT
+            COUNT(1)
+        FROM
+            sc_es_collect_content
+        WHERE
+            index_key = #{indexKey}
+        AND is_delete = 0
+        AND content_state != 1
+        AND content_state != 0
+    </select>
+
+    <select id="sumIndexKeyCount" resultType="java.lang.Long">
+        SELECT
+        COUNT(1)
+        FROM
+        sc_es_collect_content
+        WHERE
+        index_key != #{indexKey}
+        AND is_delete = 0
+    </select>
+
+</mapper>

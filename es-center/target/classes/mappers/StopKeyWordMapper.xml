@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evergrande.esserver.mapper.StopKeyWordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="com.evergrande.esserver.model.StopKeyWordModel">
+        <result property="keyId" column="key_id"/>
+        <result property="parentKeyId" column="parent_key_id"/>
+        <result property="collectType" column="collect_type"/>
+        <result property="keyState" column="key_state"/>
+        <result property="keyWord" column="key_word"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="dbCreatedTime" column="db_created_time"/>
+        <result property="dbUpdatedTime" column="db_updated_time"/>
+    </resultMap>
+
+
+    <sql id="baseColumns">
+
+        key_id ,
+        parent_key_id ,
+        collect_type ,
+        key_state ,
+        key_word ,
+        is_delete ,
+        created_by ,
+        updated_by ,
+        db_created_time ,
+        db_updated_time 
+
+</sql>
+
+
+    <sql id="queryConditions">
+        WHERE 1=1
+        <if test="stopKeyWordModel.keyId > 0 ">
+            AND key_id = #{stopKeyWordModel.keyId} ,
+        </if>
+
+        <if test="stopKeyWordModel.parentKeyId > 0 ">
+            AND parent_key_id = #{stopKeyWordModel.parentKeyId} ,
+        </if>
+
+        <if test="stopKeyWordModel.collectType > 0 ">
+            AND collect_type = #{stopKeyWordModel.collectType} ,
+        </if>
+
+        <if test="stopKeyWordModel.keyState > 0 ">
+            AND key_state = #{stopKeyWordModel.keyState} ,
+        </if>
+
+        <if test="stopKeyWordModel.keyWord != null">
+            AND key_word = #{stopKeyWordModel.keyWord} ,
+        </if>
+
+        <if test="stopKeyWordModel.isDelete > 0 ">
+            AND is_delete = #{stopKeyWordModel.isDelete} ,
+        </if>
+
+        <if test="stopKeyWordModel.createdBy > 0 ">
+            AND created_by = #{stopKeyWordModel.createdBy} ,
+        </if>
+
+        <if test="stopKeyWordModel.updatedBy > 0 ">
+            AND updated_by = #{stopKeyWordModel.updatedBy} ,
+        </if>
+
+        <if test="stopKeyWordModel.dbCreatedTime != null">
+            AND db_created_time = #{stopKeyWordModel.dbCreatedTime} ,
+        </if>
+
+        <if test="stopKeyWordModel.dbUpdatedTime != null">
+            AND db_updated_time = #{stopKeyWordModel.dbUpdatedTime}
+        </if>
+    </sql>
+
+
+    <sql id="limit">
+        <if test="page != null">
+            limit #{page.start},#{page.pageSize}
+        </if>
+    </sql>
+
+
+    <insert id="save" parameterType="com.evergrande.esserver.model.StopKeyWordModel" useGeneratedKeys="true"
+            keyProperty="KeyId" keyColumn="key_id">
+        insert into sc_es_stop_key_word
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="stopKeyWordModel.parentKeyId >0">
+                parent_key_id ,
+            </if>
+
+            <if test="stopKeyWordModel.collectType != null">
+                collect_type ,
+            </if>
+
+            <if test="stopKeyWordModel.keyState != null">
+                key_state ,
+            </if>
+
+            <if test="stopKeyWordModel.keyWord != null">
+                key_word ,
+            </if>
+
+            <if test="stopKeyWordModel.isDelete != null">
+                is_delete ,
+            </if>
+
+            <if test="stopKeyWordModel.createdBy >0">
+                created_by ,
+            </if>
+
+            <if test="stopKeyWordModel.updatedBy >0">
+                updated_by ,
+            </if>
+
+            <if test="stopKeyWordModel.dbCreatedTime != null">
+                db_created_time ,
+            </if>
+
+            <if test="stopKeyWordModel.dbUpdatedTime != null">
+                db_updated_time
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="stopKeyWordModel.parentKeyId >0">
+                #{stopKeyWordModel.parentKeyId} ,
+            </if>
+
+            <if test="stopKeyWordModel.collectType != null">
+                #{stopKeyWordModel.collectType} ,
+            </if>
+
+            <if test="stopKeyWordModel.keyState != null">
+                #{stopKeyWordModel.keyState} ,
+            </if>
+
+            <if test="stopKeyWordModel.keyWord != null">
+                #{stopKeyWordModel.keyWord} ,
+            </if>
+
+            <if test="stopKeyWordModel.isDelete != null">
+                #{stopKeyWordModel.isDelete} ,
+            </if>
+
+            <if test="stopKeyWordModel.createdBy >0">
+                #{stopKeyWordModel.createdBy} ,
+            </if>
+
+            <if test="stopKeyWordModel.updatedBy >0">
+                #{stopKeyWordModel.updatedBy} ,
+            </if>
+
+            <if test="stopKeyWordModel.dbCreatedTime != null">
+                #{stopKeyWordModel.dbCreatedTime} ,
+            </if>
+
+            <if test="stopKeyWordModel.dbUpdatedTime != null">
+                #{stopKeyWordModel.dbUpdatedTime}
+            </if>
+        </trim>
+    </insert>
+
+
+    <insert id="saveList" parameterType="com.evergrande.esserver.model.StopKeyWordModel">
+        insert into sc_es_stop_key_word
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stopKeyWordModel.parentKeyId >0">
+                parent_key_id ,
+            </if>
+
+            <if test="stopKeyWordModel.collectType >0">
+                collect_type ,
+            </if>
+
+            <if test="stopKeyWordModel.keyState >0">
+                key_state ,
+            </if>
+
+            <if test="stopKeyWordModel.keyWord != null">
+                key_word ,
+            </if>
+
+            <if test="stopKeyWordModel.isDelete >0">
+                is_delete ,
+            </if>
+
+            <if test="stopKeyWordModel.createdBy >0">
+                created_by ,
+            </if>
+
+            <if test="stopKeyWordModel.updatedBy >0">
+                updated_by ,
+            </if>
+
+            <if test="stopKeyWordModel.dbCreatedTime != null">
+                db_created_time ,
+            </if>
+
+            <if test="stopKeyWordModel.dbUpdatedTime != null">
+                db_updated_time
+            </if>
+        </trim>
+        VALUES
+        <foreach collection="listStopKeyWordModel" item="stopKeyWordModel" index="index"
+                 separator=",">
+            (
+            <if test="stopKeyWordModel.parentKeyId >0">
+                #{stopKeyWordModel.parentKeyId} ,
+            </if>
+
+            <if test="stopKeyWordModel.collectType >0">
+                #{stopKeyWordModel.collectType} ,
+            </if>
+
+            <if test="stopKeyWordModel.keyState >0">
+                #{stopKeyWordModel.keyState} ,
+            </if>
+
+            <if test="stopKeyWordModel.keyWord != null">
+                #{stopKeyWordModel.keyWord} ,
+            </if>
+
+            <if test="stopKeyWordModel.isDelete >0">
+                #{stopKeyWordModel.isDelete} ,
+            </if>
+
+            <if test="stopKeyWordModel.createdBy >0">
+                #{stopKeyWordModel.createdBy} ,
+            </if>
+
+            <if test="stopKeyWordModel.updatedBy >0">
+                #{stopKeyWordModel.updatedBy} ,
+            </if>
+
+            <if test="stopKeyWordModel.dbCreatedTime != null">
+                #{stopKeyWordModel.dbCreatedTime} ,
+            </if>
+
+            <if test="stopKeyWordModel.dbUpdatedTime != null">
+                #{stopKeyWordModel.dbUpdatedTime}
+            </if>
+            )
+        </foreach>
+    </insert>
+
+
+    <select id="queryDetail" parameterType="com.evergrande.esserver.model.StopKeyWordModel"
+            resultMap="baseResultMap">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_stop_key_word
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <select id="queryList" resultMap="baseResultMap"
+            parameterType="com.evergrande.esserver.model.StopKeyWordModel">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_stop_key_word
+        <include refid="queryConditions"/>
+        order by key_id desc
+    </select>
+
+    <select id="queryListByPage" resultMap="baseResultMap"
+            parameterType="com.evergrande.esserver.model.StopKeyWordModel">
+        select
+        <include refid="baseColumns"/>
+        from sc_es_stop_key_word
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <select id="queryCount" parameterType="com.evergrande.esserver.model.StopKeyWordModel"
+            resultType="java.lang.Long">
+        SELECT COUNT(1) FROM sc_es_stop_key_word
+        <include refid="queryConditions"/>
+    </select>
+
+
+    <update id="update" parameterType="com.evergrande.esserver.model.StopKeyWordModel">
+        update sc_es_stop_key_word
+        <set>
+            <if test="stopKeyWordModel.parentKeyId > 0">
+                parent_key_id = #{stopKeyWordModel.parentKeyId} ,
+            </if>
+
+            <if test="stopKeyWordModel.collectType >0">
+                collect_type = #{stopKeyWordModel.collectType} ,
+            </if>
+
+            <if test="stopKeyWordModel.keyState >0">
+                key_state = #{stopKeyWordModel.keyState} ,
+            </if>
+
+            <if test="stopKeyWordModel.keyWord != null">
+                key_word = #{stopKeyWordModel.keyWord} ,
+            </if>
+
+            <if test="stopKeyWordModel.isDelete >0">
+                is_delete = #{stopKeyWordModel.isDelete} ,
+            </if>
+
+            <if test="stopKeyWordModel.createdBy > 0">
+                created_by = #{stopKeyWordModel.createdBy} ,
+            </if>
+
+            <if test="stopKeyWordModel.updatedBy > 0">
+                updated_by = #{stopKeyWordModel.updatedBy} ,
+            </if>
+
+            <if test="stopKeyWordModel.dbCreatedTime != null">
+                db_created_time = #{stopKeyWordModel.dbCreatedTime} ,
+            </if>
+
+            <if test="stopKeyWordModel.dbUpdatedTime != null">
+                db_updated_time = #{stopKeyWordModel.dbUpdatedTime}
+            </if>
+        </set>
+        where key_id = #{KeyId}
+    </update>
+
+
+    <delete id="delete" parameterType="com.evergrande.esserver.model.StopKeyWordModel">
+        delete from sc_es_stop_key_word
+        <include refid="queryConditions"/>
+    </delete>
+
+
+    <update id="updateState" parameterType="com.evergrande.esserver.model.StopKeyWordModel">
+        update sc_es_stop_key_word set key_state = 1 where key_state = #{stopKeyWordModel.keyState}
+    </update>
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evergrande.esserver.mapper.IndexMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="com.evergrande.esserver.model.IndexModel">
+        <result property="indexId" column="index_id"/>
+        <result property="indexState" column="index_state"/>
+        <result property="timeKey" column="time_key"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="dbCreatedTime" column="db_created_time"/>
+        <result property="dbUpdatedTime" column="db_updated_time"/>
+    </resultMap>
+
+
+    <sql id="baseColumns">
+        index_id ,
+        index_state ,
+        time_key ,
+        is_delete ,
+        created_by ,
+        updated_by ,
+        db_created_time ,
+        db_updated_time
+    </sql>
+
+    <select id="getIndexKeyByIndexState" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM
+        sc_es_index
+        WHERE
+        index_state = #{indexState} and is_delete =0 order by db_created_time desc limit 1
+
+    </select>
+
+    <select id="getIndexKeyByTimeKey" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM
+        sc_es_index
+        WHERE
+        time_key = #{timeKey} and is_delete =0 and index_state = #{indexState} limit 1
+    </select>
+
+    <insert id="save" parameterType="com.evergrande.esserver.model.IndexModel" useGeneratedKeys="true"
+            keyProperty="indexId" keyColumn="index_id">
+        insert into sc_es_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="indexModel.indexState != null">
+                index_state ,
+            </if>
+
+            <if test="indexModel.timeKey != null">
+                time_key ,
+            </if>
+
+            <if test="indexModel.isDelete != null">
+                is_delete ,
+            </if>
+
+            <if test="indexModel.createdBy >0">
+                created_by ,
+            </if>
+
+            <if test="indexModel.updatedBy >0">
+                updated_by ,
+            </if>
+
+            <if test="indexModel.dbCreatedTime != null">
+                db_created_time ,
+            </if>
+
+            <if test="indexModel.dbUpdatedTime != null">
+                db_updated_time ,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="indexModel.indexState != null">
+                #{indexModel.indexState} ,
+            </if>
+
+            <if test="indexModel.timeKey != null">
+                #{indexModel.timeKey} ,
+            </if>
+
+            <if test="indexModel.isDelete != null">
+                #{indexModel.isDelete} ,
+            </if>
+
+            <if test="indexModel.createdBy >0">
+                #{indexModel.createdBy} ,
+            </if>
+
+            <if test="indexModel.updatedBy >0">
+                #{indexModel.updatedBy} ,
+            </if>
+
+            <if test="indexModel.dbCreatedTime != null">
+                #{indexModel.dbCreatedTime} ,
+            </if>
+
+            <if test="indexModel.dbUpdatedTime != null">
+                #{indexModel.dbUpdatedTime} ,
+            </if>
+
+        </trim>
+    </insert>
+
+    <update id="updateIndexStateByInvalid">
+        update sc_es_index set index_state = 0 where index_id != #{indexId}
+    </update>
+
+    <update id="updateIndexStateByEffective">
+        update sc_es_index set index_state = 1 where index_id = #{indexId}
+    </update>
+
+    <update id="updateIndexStateByStruInvalid">
+        update sc_es_index set index_state = 0 where index_state = 2
+    </update>
+
+</mapper>

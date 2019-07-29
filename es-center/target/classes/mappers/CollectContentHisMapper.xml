@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.evergrande.esserver.mapper.CollectContentHisMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="baseResultMap" type="com.evergrande.esserver.model.CollectContentHisModel">
+        <result property="parentContentId" column="parent_content_id"/>
+        <result property="contentId" column="content_id"/>
+        <result property="spaceName" column="space_name"/>
+        <result property="dbOperation" column="db_operation"/>
+        <result property="primaryKey" column="primary_key"/>
+        <result property="contentJson" column="content_json"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="dbCreatedTime" column="db_created_time"/>
+        <result property="dbUpdatedTime" column="db_updated_time"/>
+        <result property="timeStamp" column="time_stamp"/>
+        <result property="businessSysCode" column="business_sys_code"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.evergrande.esserver.model.CollectContentHisModel" useGeneratedKeys="true"
+            keyProperty="parentContentId" keyColumn="parent_content_id">
+        insert into sc_es_collect_content_his
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="collectContentModel.spaceName != null">
+                space_name ,
+            </if>
+
+            <if test="collectContentModel.dbOperation != null">
+                db_operation ,
+            </if>
+
+            <if test="collectContentModel.primaryKey != null">
+                primary_key ,
+            </if>
+
+            <if test="collectContentModel.contentJson != null">
+                content_json ,
+            </if>
+
+            <if test="collectContentModel.isDelete != null">
+                is_delete ,
+            </if>
+
+            <if test="collectContentModel.createdBy >0">
+                created_by ,
+            </if>
+
+            <if test="collectContentModel.updatedBy >0">
+                updated_by ,
+            </if>
+
+            <if test="collectContentModel.dbCreatedTime != null">
+                db_created_time ,
+            </if>
+
+            <if test="collectContentModel.dbUpdatedTime != null">
+                db_updated_time ,
+            </if>
+            <if test="collectContentModel.timeStamp > 0">
+                time_stamp ,
+            </if>
+            <if test="collectContentModel.businessSysCode != null">
+                business_sys_code ,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+
+            <if test="collectContentModel.spaceName != null">
+                #{collectContentModel.spaceName} ,
+            </if>
+
+            <if test="collectContentModel.dbOperation != null">
+                #{collectContentModel.dbOperation} ,
+            </if>
+
+            <if test="collectContentModel.primaryKey != null">
+                #{collectContentModel.primaryKey} ,
+            </if>
+
+            <if test="collectContentModel.contentJson != null">
+                #{collectContentModel.contentJson} ,
+            </if>
+
+            <if test="collectContentModel.isDelete != null">
+                #{collectContentModel.isDelete} ,
+            </if>
+
+            <if test="collectContentModel.createdBy >0">
+                #{collectContentModel.createdBy} ,
+            </if>
+
+            <if test="collectContentModel.updatedBy >0">
+                #{collectContentModel.updatedBy} ,
+            </if>
+
+            <if test="collectContentModel.dbCreatedTime != null">
+                #{collectContentModel.dbCreatedTime} ,
+            </if>
+
+            <if test="collectContentModel.dbUpdatedTime != null">
+                #{collectContentModel.dbUpdatedTime} ,
+            </if>
+            <if test="collectContentModel.timeStamp > 0">
+                #{collectContentModel.timeStamp} ,
+            </if>
+            <if test="collectContentModel.businessSysCode != null">
+                #{collectContentModel.businessSysCode} ,
+            </if>
+
+        </trim>
+    </insert>
+
+    <sql id="baseColumns">
+        parent_content_id ,
+        content_id ,
+        time_stamp ,
+        space_name ,
+        primary_key ,
+        content_json ,
+        db_operation ,
+        business_sys_code
+    </sql>
+
+    <select id="queryByContentId" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM
+        sc_es_collect_content_his
+        WHERE
+        content_id = #{contentId} and is_delete =0
+    </select>
+
+</mapper>
